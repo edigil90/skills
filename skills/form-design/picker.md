@@ -8,13 +8,13 @@ Never style the picker with the project's tokens, fonts or colors. One that look
 
 ## Two groups, one list
 
-The list has two groups under their headings, Version and State. `Today` comes first, then `Today, fixed`, then the three chosen concepts in the order they were written down.
+The list has two groups under their headings, Version and State. `Today` comes first, then `Today, fixed`, then the three chosen ideas.
 
 - The Version buttons set the `__variant` search param and the State buttons set `__state`. The page reads both back from the URL, so every version in every state is a link.
-- Up and down step through the versions and left and right through the states. `H` hides and shows the picker, for screenshots and recordings.
+- Up and down step through the versions and left and right through the states. `H` hides and shows the picker for recordings, and `__picker=off` in the URL leaves it out for screenshots.
 - Keys are ignored with a modifier held, when already `defaultPrevented` and from inputs, textareas, selects and contenteditable elements. They are also ignored from anything that uses arrows itself: `listbox`, `radiogroup`, `grid`, `menu`, `slider`, `spinbutton`, `tablist` and `combobox`.
 - The active button in each group carries `aria-pressed="true"`. The list carries a label, and each group is a `role="group"` labelled by its heading.
-- Switching is instant and keeps the dialog open and the page's scroll. A new version or state starts the form from that state's data.
+- Switching keeps the dialog open and starts the form from that state's data. Where switching reloads the page, as in a server-rendered app, the page restores its scroll.
 
 ## Over a modal
 
@@ -22,6 +22,7 @@ A modal makes the page under it inert, and the picker with it.
 
 - A native `<dialog>` opened with `showModal()` keeps only its own descendants live. Render the picker inside it.
 - A library dialog usually traps focus, sets `pointer-events: none` on the body and closes on an outside click. Give the picker `pointer-events: auto` and stop the dialog's outside-interaction handler for events inside the picker.
+- Where the library marks the rest of the page `inert` or `aria-hidden`, render the picker inside the dialog's portal, so it counts as part of the dialog.
 
 Then check that a click on the picker switches the version and the dialog stays open.
 

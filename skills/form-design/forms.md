@@ -1,8 +1,8 @@
 # The floor
 
-The rules every version clears, whatever its concept. They are pass or fail, and none of them is a direction.
+The rules every version clears, whatever its idea. They are pass or fail, and none of them is a direction.
 
-The rules on what the form asks, labels, types, errors, sending, failure, keyboard and pickers hold even where the product's own components fall short. The rules on shape, size and decoration give way to the product's look: where its components do otherwise, such as uppercase labels or a dialog centered on the screen, keep the product's way and name it in the hand-over as a suggestion.
+The rules on what the form asks, labels, types, errors, sending, failure, keyboard and pickers hold even where the product's own components fall short. The rules on shape, size and decoration give way to the product's look. Where its components do otherwise, such as uppercase labels or a centered dialog, keep the product's way and name it in the hand-over as a suggestion.
 
 ## What the form asks
 
