@@ -20,7 +20,7 @@
     "capabilities": [],
     "websiteURL": "https://github.com/edigil90/skills",
     "defaultPrompt": [
-      "Build three versions of the New booking dialog.",
+      "Design the create dialog for this list.",
       "Redesign the sign-up form and let me flip between versions."
     ]
   }

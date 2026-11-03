@@ -1,6 +1,8 @@
 # The floor
 
-The rules every version clears, whatever its position on the axis. They are pass or fail, and none of them is a direction.
+The rules every version clears, whatever its concept. They are pass or fail, and none of them is a direction.
+
+The rules on what the form asks, labels, types, errors, sending, failure, keyboard and pickers hold even where the product's own components fall short. The rules on shape, size and decoration give way to the product's look: where its components do otherwise, such as uppercase labels or a dialog centered on the screen, keep the product's way and name it in the hand-over as a suggestion.
 
 ## What the form asks
 
@@ -16,7 +18,7 @@ The rules every version clears, whatever its position on the axis. They are pass
 - A visible label tied to its field, with `<label for>` or a wrapping label.
 - A placeholder is an example in the accepted format, never the label and never an instruction.
 - No floating labels. A bare field is allowed only where its row already names it, such as a title field in a dialog or a value in a properties row.
-- A hint only where the audit kept one, tied with `aria-describedby`.
+- A hint only where step 4 kept one, tied with `aria-describedby`.
 
 ## Types and autofill
 
@@ -37,7 +39,7 @@ The rules every version clears, whatever its position on the axis. They are pass
 
 ## Sending
 
-- The submit button is always enabled. Pressed early, it shows what is missing and focuses it.
+- The submit button stays enabled until the form is sent. Pressed early, it shows what is missing and focuses it.
 - It says what happens: "Create project", never "Submit". The last step of a flow names the consequence, such as "Pay €48".
 - While sending, the pressed button keeps its place and shows a pending label ending in one "…" character, "Creating…". It carries `aria-disabled="true"` and ignores a second press.
 - The rest of the form is locked, and a dialog cannot close by Esc, outside click or its close button.
@@ -67,7 +69,7 @@ The rules every version clears, whatever its position on the axis. They are pass
 
 ## Shape and size
 
-- One column. Pairs that are one datum may share a row, such as a start and end time.
+- Fields sit in one column. Pairs that are one datum may share a row, such as a start and end time. A summary or a total may sit beside the fields.
 - The form's own frame is as big as what it holds. A dialog's width fits its content and its height grows with it, anchored at the top.
 - At 390px wide nothing scrolls sideways, long words wrap and grid children carry `min-width: 0`.
 - On touch, field text is 16px or larger so the page does not zoom, and targets are 44px.

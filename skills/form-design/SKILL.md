@@ -13,9 +13,9 @@ metadata:
 
 # Form design
 
-This skill takes one form, finds what is wrong with it today and builds versions that fix it, in the app where the form lives. A picker beside it flips between the versions and their states, so the choice is made by using them.
+This skill designs a new form or redesigns an existing one by building versions of it in the app where it lives. A picker over the page flips between the versions and their states, so the choice is made by using them.
 
-It produces candidates and never ranks them. Every version clears the same floor in [forms.md](forms.md), fixes the same problems and differs in how.
+It never marks a favourite among the versions it builds. Every version clears the same floor in [forms.md](forms.md), fixes the same problems and differs in how.
 
 ## The floor is exact, the rest is a choice
 
@@ -27,7 +27,9 @@ When the user's or the project's rules forbid something this skill does, such as
 
 A form is a screen people work in. Its controls stay the ones the product and its platform already use, so someone who knows the product trusts every version at once. An invented control or a new way to enter data comes only when the user asks for it.
 
-Inside that, each version carries one signature: one element only this product could have, built from its own things. The team's cover drawn under the chosen days of a leave request is one; a tidy form that could belong to any product has none. Name the signature in a phrase. A version whose only difference is spacing or color has not found one.
+Inside that, each concept carries one signature: one element only this product could have, built from its own things. The team's cover drawn under the chosen days of a leave request is one; a tidy form that could belong to any product has none. Name the signature in a phrase. A concept whose only difference is spacing or color has not found one.
+
+When the form holds nothing only this product has, such as a password change, say so. The concepts then differ in what leads and how the form divides, and none gets a signature for its own sake.
 
 The bar is the best product doing the same job. Every version is at least as clean as it and more specific to this product.
 
@@ -76,7 +78,7 @@ One line per field and per hidden question, such as a preselected value, a defau
 
 A field without a reason is cut. A concept may change these decisions only when that change is its point, and then it says so.
 
-## 5. Write twenty titles, then push them apart
+## 5. Write the titles, then push them apart
 
 Ideas come before references, because the first example anyone sees pulls every idea toward it.
 
@@ -100,13 +102,13 @@ Then choose three in a separate pass. Each chosen concept:
 
 - fixes every problem from step 3;
 - uses the product's own controls, so someone who knows the product trusts it at once;
-- has a signature only this product could have;
+- has a signature only this product could have, unless the form holds none;
 - would change if this were the same form in another product. One that would stay the same is the category default;
 - differs from the other two in what leads or how the form divides, visible at thumbnail size.
 
 Show the user all eight in a short list with the three you chose, and build after their answer. They may swap one.
 
-`Today, fixed` is built beside the three: today's flow and layout with every problem from step 3 fixed and nothing else changed. It is the category standard played straight, the baseline the others must beat. Names say what each version is, such as `Today, fixed`, `Cover first` or `Total beside`, never `Option A`.
+`Today, fixed` is built beside the three: today's flow and layout with every problem from step 3 fixed and nothing else changed. It carries no signature and is the baseline to compare the others with. With no form yet, there is no `Today` and no `Today, fixed`, and the three concepts are the versions. Names say what each version is, such as `Today, fixed`, `Cover first` or `Total beside`, never `Option A`.
 
 ## 8. Build it into the real page
 
@@ -114,11 +116,11 @@ Host the versions where the form really opens, over the real page and with real 
 
 - One file per version, in one folder with the picker, the fixtures and the submit stub, such as `__form-design/leave-request/`, so removal is one delete.
 - Versions import the project's components, tokens and form library. What the project lacks is built in its idiom.
-- The form as it is comes first in the picker as `Today`, imported untouched.
+- The form as it is comes first in the picker as `Today`, imported untouched. It shows only the states it reaches on its own, usually Empty. The harness stops its submit at the wrapper with a capture-phase listener that prevents the submit event, so it never reaches the server. Where its submit does not go through a form submit event, say so and ask before adding a seam.
 - Only the hosting page imports the folder, and only while `__variant` is in the URL. Without it the page is unchanged.
-- Each version takes its starting values, its errors and its submit function from the page. A state is then data, never a branch inside the version.
+- Each version you build takes its starting values, its errors and its submit function from the page. A state is then data, never a branch inside the version.
 - Data looks like the product: the project's seeds or fixtures, or what the dev database returns. Reading is fine, but a version never writes.
-- Submitting goes to the stub, never to the server. It waits about a second, then succeeds, or refuses the way the server would when the State says so.
+- Submitting goes to the stub, never to the server. The stub answers as the State says: under Sending it stays pending, under Refused it refuses the way the server would, and otherwise it succeeds after about a second.
 
 Where the framework splits server from client code, the harness is client code, `"use client"` in Next. Otherwise fixture data can vanish at the boundary and the form renders empty.
 
@@ -143,7 +145,7 @@ Keep only the states a version can reach, and say which you dropped.
 
 Run the project's own checks on the files you added, such as lint and the typecheck.
 
-Then shoot every version in Empty, Filled, Errors and Done, at 1280 and at 390 wide. Use a headless browser of your own and never the user's window: a Chrome, Edge, Chromium or Brave installed on the machine, with its sandbox on. Drive it with Playwright where the project has it, through `channel` or `executablePath` and with `chromiumSandbox: true`, and run it headless on its own otherwise. Never use the Chromium that Playwright downloads: it trails the browser's security fixes and runs without a sandbox by default. Sign in as the project's development seed user, the way its system tests do, never with the user's account. Save the shots in the folder under `shots/`.
+Then shoot every version in Empty, Filled, Errors and Done, at 1280 and at 390 wide. Use a headless browser of your own and never the user's window: a Chrome, Edge, Chromium or Brave installed on the machine, with its sandbox on. Drive it with Playwright where the project has it, through `channel` or `executablePath` and with `chromiumSandbox: true`, and run it headless on its own otherwise. Never use the Chromium that Playwright downloads, since it trails the browser's security fixes. Playwright turns the sandbox off for every browser unless `chromiumSandbox: true` is set. Sign in as the project's development seed user, the way its system tests do, never with the user's account. Save the shots in the folder under `shots/`.
 
 A fresh reviewer judges the shots, because a model that wrote the reasons reads them back into the picture. Start a subagent and give it only the shots, the references and these questions, never your plan, your concepts or your notes:
 
@@ -168,7 +170,7 @@ List the problems from step 3 first, then the table:
 | Today, fixed | Today's flow | None | 6 | The flow works and the details hurt | Keeps today's length |
 | Cover first | The team's cover for the chosen days | Cover drawn under the dates | 5 | Most requests clash with someone | The dates take more room |
 
-Every signature and every fixed problem in the table names the shot that shows it. A claim no shot shows leaves the table.
+Every signature and every fixed problem in the table names the shot that shows it. A fix no shot can show, such as a key or a value kept after a refusal, says how you checked it. Without shots, say which claims you could not check.
 
 Below the table, say in one line which parts of two versions would combine well, if any do. A merge often beats every single version.
 
@@ -176,22 +178,24 @@ Give one link per version, the keys and the width you judged at. Never mark a fa
 
 Stop there. Commit nothing, since the folder is throwaway.
 
+When the user turns a version down, write it down with one line why, where step 2 looks for directions shown before: the project's decision records, or the agent's memory for this project.
+
 ## 12. Promote one, delete the rest
 
 On a choice, build that version properly where the form lives, in the project's conventions, with its real submit and the project's tests. Then delete the folder and the hosting page's import. Search for the version names, `__variant` and `__state`, and check that the diff leaves nothing of the harness behind.
 
-Asked for another round instead, keep the harness and go back to **Write twenty titles, then push them apart**, with new titles around the version the user leaned toward. A merge is built as a new entry first.
+Asked for another round instead, keep the harness and go back to **Write the titles, then push them apart**, with new titles around the version the user leaned toward. A merge is built as a new entry first.
 
 ## Before you finish
 
 | Mistake | Fix |
 | --- | --- |
 | Built before the user answered step 3 or saw the concepts | Ask first; the answers are the brief |
-| Concepts written straight away | Directions, then twenty titles pushed apart, then eight concepts, then three |
+| Concepts written straight away | Directions, then fifteen to twenty titles pushed apart, then eight concepts, then three |
 | References read before the first titles | Titles first; references sharpen them after |
 | Every concept typical | At least two below 0.15 |
 | A concept that would stay the same in another product | It is the category default; leave it out of the three |
-| A version without a signature, or with only new spacing or colors | Find one element only this product has, or drop the version |
+| A concept with only new spacing or colors | Find one element only this product has, or make it differ in what leads and how it divides |
 | A signature that is a new control or a new way to enter data | Build it from the product's own controls |
 | One reference, or a reference copied as a layout | Three to five, for their mechanisms and their craft |
 | A version leaves a problem from step 3 unfixed | Fix it, or drop the version |
