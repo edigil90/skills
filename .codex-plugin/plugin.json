@@ -1,0 +1,27 @@
+{
+  "name": "form-design",
+  "version": "0.9.9",
+  "description": "form-design: designs and redesigns forms.",
+  "author": {
+    "name": "Edi Gil",
+    "url": "https://www.edigil.com"
+  },
+  "homepage": "https://github.com/edigil90/skills",
+  "repository": "https://github.com/edigil90/skills",
+  "license": "MIT",
+  "keywords": ["skills", "forms", "design", "ux", "variants", "prototype"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Form Design",
+    "shortDescription": "Designs and redesigns forms.",
+    "longDescription": "Designs and redesigns forms. Builds the strongest ideas as working versions in your app, with your own components, so you can try each one and choose.",
+    "developerName": "Edi Gil",
+    "category": "Design",
+    "capabilities": [],
+    "websiteURL": "https://github.com/edigil90/skills",
+    "defaultPrompt": [
+      "Build three versions of the New booking dialog.",
+      "Redesign the sign-up form and let me flip between versions."
+    ]
+  }
+}

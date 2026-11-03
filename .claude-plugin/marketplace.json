@@ -1,0 +1,24 @@
+{
+  "name": "edigil",
+  "description": "Agent skills by Edi Gil.",
+  "owner": {
+    "name": "Edi Gil"
+  },
+  "plugins": [
+    {
+      "name": "form-design",
+      "description": "Designs and redesigns forms. Builds the strongest ideas as working versions in your app, with your own components, so you can try each one and choose.",
+      "version": "0.9.9",
+      "source": "./",
+      "skills": ["./skills/form-design"],
+      "author": {
+        "name": "Edi Gil",
+        "url": "https://www.edigil.com"
+      },
+      "homepage": "https://github.com/edigil90/skills",
+      "repository": "https://github.com/edigil90/skills",
+      "license": "MIT",
+      "keywords": ["skills", "forms", "design", "ux", "variants", "prototype"]
+    }
+  ]
+}
