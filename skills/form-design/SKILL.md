@@ -46,7 +46,7 @@ Read what the versions will stand on:
 - The form as it is: its fields in order, every default and its source, when it validates, what an error looks like and what follows success.
 - The server's contract: the fields it reads, the rule behind each and what it refuses.
 - Where the form opens: the page under it, its neighbours and its width.
-- The product's density and voice.
+- The product's density and voice. A tool staff use every day may be dense and keyboard-first; a page a guest fills once is calm and touch-first.
 - The project's decision records and the agent's memory, for versions the user turned down before. None of them is offered again.
 
 Then write one sentence on what is on screen today: the surface and accent colors with their values, the font, how dialogs are framed and the tone of the copy. Every version keeps it unless the user asks otherwise.

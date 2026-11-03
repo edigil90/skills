@@ -17,7 +17,10 @@ The rules on what the form asks, labels, types, errors, sending, failure, keyboa
 
 - A visible label tied to its field, with `<label for>` or a wrapping label.
 - A placeholder is an example in the accepted format, never the label and never an instruction.
-- No floating labels. A bare field is allowed only where its row already names it, such as a title field in a dialog or a value in a properties row.
+- No floating labels, unless the product's own field component floats them.
+- A bare field is allowed only where its row already names it, such as a title field in a dialog or a value in a table row.
+- A required field carries `required` or `aria-required="true"`, whatever its visual mark.
+- A group of radios or checkboxes sits in a `fieldset` whose `legend` asks the question.
 - A hint only where step 4 kept one, tied with `aria-describedby`.
 
 ## Types and autofill
@@ -50,8 +53,9 @@ The rules on what the form asks, labels, types, errors, sending, failure, keyboa
 
 - Typed values survive every failure: a refusal, a thrown error, a lost connection, going back.
 - A refusal says what happened and what to do, by the field it concerns where there is one.
-- "Try again" is always a button. Retrying is safe because the server ignores a repeat.
+- "Try again" is always a button. When the server would accept the same request twice, say so in the hand-over.
 - Success names the action and the object, "Project created", never "Success!". It leads to the object or the next step, the way the product does elsewhere.
+- Success is announced through a polite live region, and a form-level error through `role="alert"`.
 
 ## Keyboard
 
@@ -73,7 +77,6 @@ The rules on what the form asks, labels, types, errors, sending, failure, keyboa
 - The form's own frame is as big as what it holds. A dialog's width fits its content and its height grows with it, anchored at the top.
 - At 390px wide nothing scrolls sideways, long words wrap and grid children carry `min-width: 0`.
 - On touch, field text is 16px or larger so the page does not zoom, and targets are 44px.
-- A tool staff use every day may be dense and keyboard-first. A page a guest fills once is calm and touch-first.
 
 ## Nothing that repeats
 
