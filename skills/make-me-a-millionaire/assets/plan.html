@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accelerated Wealth Protocol</title>
+<style>
+  :root {
+    color-scheme: light;
+    --paper: rgb(247 244 237);
+    --sheet: rgb(255 253 248);
+    --ink: rgb(28 26 23);
+    --muted: rgb(28 26 23 / 0.6);
+    --rule: rgb(28 26 23 / 0.14);
+    --navy: rgb(24 44 74);
+    --navy-ink: rgb(240 236 226);
+    --gold: rgb(150 118 56);
+    --stage: rgb(14 13 12);
+    --stage-ink: rgb(236 230 216);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 15px/1.55 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .report {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 56px 64px;
+    background: var(--sheet);
+    box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -32px rgb(28 26 23 / 0.35);
+  }
+
+  h1, h2, h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  p { margin: 0; }
+
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cover {
+    display: grid;
+    gap: 20px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cover-top .label:first-child { color: var(--gold); }
+
+  h1 {
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 24px;
+    margin: 8px 0 0;
+  }
+
+  .meta div { min-width: 0; }
+
+  .meta dt { margin-bottom: 2px; }
+
+  .meta dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+
+  section {
+    display: grid;
+    gap: 16px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 { font-size: 24px; }
+
+  .lead {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th, td {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th:not(:first-child), td:not(:first-child) {
+    padding-left: 16px;
+    text-align: right;
+  }
+
+  th { padding-top: 0; }
+
+  .notes {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .gantt {
+    display: grid;
+    gap: 8px;
+  }
+
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr) 72px;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .gantt-months {
+    text-align: right;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gantt-track {
+    position: relative;
+    height: 22px;
+    background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), var(--rule) calc(10% - 1px) 10%);
+  }
+
+  .gantt-bar {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    background: var(--navy);
+  }
+
+  .gantt-now {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    background: var(--gold);
+  }
+
+  .phases {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .phase {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 4px 16px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .phase-number {
+    grid-row: span 4;
+    font-family: var(--serif);
+    font-size: 36px;
+    line-height: 1;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .phase-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .phase h3 { font-size: 21px; }
+
+  .phase-duration { white-space: nowrap; }
+
+  .phase-objective { color: var(--muted); }
+
+  .phase ol {
+    display: grid;
+    gap: 6px;
+    margin: 8px 0 0;
+    padding-left: 20px;
+  }
+
+  .phase-kpi {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    font-size: 14px;
+  }
+
+  .phase-kpi .label { margin-right: 8px; }
+
+  .execute {
+    margin-top: 36px;
+    padding: 32px;
+    border: 0;
+    background: var(--navy);
+    color: var(--navy-ink);
+  }
+
+  .execute .phase-number { color: var(--gold); }
+
+  .execute h3,
+  .execute .label { color: var(--navy-ink); }
+
+  .execute .phase-kpi { border-top-color: rgb(240 236 226 / 0.25); }
+
+  .execute button {
+    justify-self: start;
+    margin-top: 16px;
+    min-height: 48px;
+    padding: 0 28px;
+    border: 0;
+    border-radius: 2px;
+    background: var(--navy-ink);
+    color: var(--navy);
+    font: 600 15px/1 var(--sans);
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+
+  .execute button:focus-visible,
+  .finale a:focus-visible,
+  .finale button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  footer {
+    display: grid;
+    gap: 10px;
+    padding-top: 36px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  footer ol {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  footer a { color: inherit; }
+
+  .appendix {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .finale {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 24px 16px;
+    border: 0;
+    background: var(--stage);
+    color: var(--stage-ink);
+    font: 14px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  .finale[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .finale::backdrop { background: var(--stage); }
+
+  .finale-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .finale canvas {
+    display: block;
+    image-rendering: pixelated;
+  }
+
+  .finale h2 {
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--stage-ink);
+  }
+
+  .finale .eyebrow {
+    font-size: 12px;
+    color: rgb(236 230 216 / 0.55);
+  }
+
+  .finale a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--stage-ink);
+    color: var(--stage);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .finale button {
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    background: none;
+    color: rgb(236 230 216 / 0.55);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  @media (max-width: 720px) {
+    .report {
+      margin: 0;
+      padding: 32px 16px;
+      box-shadow: none;
+    }
+
+    h1 { font-size: 30px; }
+
+    .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .gantt-row { grid-template-columns: 96px minmax(0, 1fr) 64px; }
+
+    .phase { grid-template-columns: 32px minmax(0, 1fr); }
+
+    .phase-number { font-size: 26px; }
+
+    .execute { padding: 24px 16px; }
+
+    th, td { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<main class="report"></main>
+
+<dialog class="finale" aria-labelledby="finale-title">
+  <div class="finale-content">
+    <p class="eyebrow">Accelerated Wealth Protocol · Phase 7 of 7: Execute</p>
+    <canvas width="160" height="200" role="img" aria-label="A man in a trench coat dancing under a spotlight"></canvas>
+    <h2 id="finale-title">Onboarding complete.</h2>
+    <a class="withdraw" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Withdraw your first million</a>
+    <button type="button" class="back">Back to the plan</button>
+  </div>
+</dialog>
+
+<!-- The plan: replace this data, keep the rest. -->
+<script type="application/json" id="plan">
+{
+  "client": "You",
+  "preparedOn": "The date of the run",
+  "profile": "millionaire",
+  "level": 1,
+  "target": "Your first million",
+  "targetAmount": "1,000,000 EUR",
+  "deadline": "The deadline",
+  "baseline": {
+    "summary": "One plain sentence with the arrival year at 7%.",
+    "intro": "The script's intro line.",
+    "rows": [
+      { "return": "0%, under the mattress", "time": "—", "arrives": "—" },
+      { "return": "4%, a savings account", "time": "—", "arrives": "—" },
+      { "return": "7%, a broad index fund", "time": "—", "arrives": "—" },
+      { "return": "10%, a very good decade", "time": "—", "arrives": "—" }
+    ],
+    "notes": ["The script's notes."]
+  },
+  "phases": [
+    { "name": "Mindset", "months": 3, "objective": "The objective.", "actions": ["First action.", "Second action.", "Third action."], "kpi": "The KPI." },
+    { "name": "Personal brand", "months": 6, "objective": "The objective.", "actions": ["First action.", "Second action.", "Third action."], "kpi": "The KPI." },
+    { "name": "Passive income", "months": 9, "objective": "The objective.", "actions": ["First action.", "Second action.", "Third action."], "kpi": "The KPI." },
+    { "name": "Leverage", "months": 6, "objective": "The objective.", "actions": ["First action.", "Second action.", "Third action."], "kpi": "The KPI." },
+    { "name": "Scale", "months": 12, "objective": "The objective.", "actions": ["First action.", "Second action.", "Third action."], "kpi": "The KPI." },
+    { "name": "Exit", "months": 6, "objective": "The objective.", "actions": ["First action.", "Second action.", "Third action."], "kpi": "The KPI." }
+  ],
+  "withdraw": "Withdraw your first million",
+  "sources": [],
+  "next": "Level 1 of 7 complete. Run again to aim for a billion."
+}
+</script>
+
+<script>
+// A dancer drawn from shapes, lit like a sphere, and dithered to two colours with an 8×8 Bayer
+// matrix. renderFrame() is pure, so it also runs outside a browser.
+const W = 160;
+const H = 200;
+const BPM = 113;
+const INK = [14, 13, 12];
+const PAPER = [236, 230, 216];
+
+const LIGHT = (() => {
+  const v = [-0.45, -0.55, 0.7];
+  const length = Math.hypot(...v);
+  return v.map((x) => x / length);
+})();
+
+const BAYER = (() => {
+  const base = [[0, 2], [3, 1]];
+  let m = base;
+  while (m.length < 8) {
+    const n = m.length;
+    m = Array.from({ length: 2 * n }, (_, y) =>
+      Array.from({ length: 2 * n }, (_, x) => 4 * m[y % n][x % n] + base[Math.floor(y / n)][Math.floor(x / n)]));
+  }
+  return m.flat().map((v) => (v + 0.5) / 64);
+})();
+
+const clamp = (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, x) => {
+  const t = clamp((x - a) / (b - a));
+  return t * t * (3 - 2 * t);
+};
+
+const lit = (base, nx, ny, nz) => clamp(base * (0.3 + 0.85 * Math.max(0, nx * LIGHT[0] + ny * LIGHT[1] + nz * LIGHT[2])));
+
+// Each shape answers hit(x, y): its brightness from 0 to 1, or -1 where it isn't.
+function capsule(ax, ay, bx, by, r, base) {
+  const dx = bx - ax;
+  const dy = by - ay;
+  const length2 = dx * dx + dy * dy || 1;
+  return (x, y) => {
+    const h = clamp(((x - ax) * dx + (y - ay) * dy) / length2);
+    const vx = (x - ax - dx * h) / r;
+    const vy = (y - ay - dy * h) / r;
+    const d2 = vx * vx + vy * vy;
+    return d2 > 1 ? -1 : lit(base, vx, vy, Math.sqrt(1 - d2));
+  };
+}
+
+function ellipse(cx, cy, rx, ry, base, rotation = 0) {
+  const cos = Math.cos(rotation);
+  const sin = Math.sin(rotation);
+  return (x, y) => {
+    const u = ((x - cx) * cos + (y - cy) * sin) / rx;
+    const v = (-(x - cx) * sin + (y - cy) * cos) / ry;
+    const d2 = u * u + v * v;
+    return d2 > 1 ? -1 : lit(base, u * cos - v * sin, u * sin + v * cos, Math.sqrt(1 - d2));
+  };
+}
+
+// A flat shape, rounded by darkening it toward its edges and lit from the left.
+function polygon(points, base, centerX, rim = 5) {
+  return (x, y) => {
+    let inside = false;
+    let edge = Infinity;
+    for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+      const [xi, yi] = points[i];
+      const [xj, yj] = points[j];
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      const ex = xj - xi;
+      const ey = yj - yi;
+      const h = clamp(((x - xi) * ex + (y - yi) * ey) / (ex * ex + ey * ey || 1));
+      edge = Math.min(edge, Math.hypot(x - xi - ex * h, y - yi - ey * h));
+    }
+    if (!inside) return -1;
+    const round = 0.55 + 0.45 * Math.min(1, edge / rim);
+    return clamp(base * round * (1 + 0.22 * clamp((centerX - x) / 20, -1, 1)));
+  };
+}
+
+function background(x, y, shadowX) {
+  const dx = x - W / 2;
+  const spread = 16 + 0.22 * y;
+  let lum = 0.015 + 0.13 * Math.exp(-(dx * dx) / (2 * spread * spread));
+  if (y > 180) {
+    lum = 0.05 + 0.22 * Math.exp(-(dx * dx) / (2 * 44 * 44));
+    const sx = (x - shadowX) / 30;
+    const sy = (y - 187) / 6;
+    lum *= 1 - 0.85 * clamp(1 - (sx * sx + sy * sy));
+  }
+  return lum;
+}
+
+function pose(t) {
+  const beat = (t * BPM) / 60;
+  const sway = Math.sin(Math.PI * beat);
+  const dip = 0.5 + 0.5 * Math.cos(2 * Math.PI * beat);
+  const lift = 3.2 * dip;
+  const cx = W / 2;
+  const hipX = cx + 5 * sway;
+  const shoulderX = cx + 2.5 * sway;
+  const hemX = hipX - 3 * sway;
+  const headX = shoulderX + 1.4 * Math.sin(Math.PI * beat + 0.6);
+  const swing = Math.cos(Math.PI * beat);
+  // For two beats of every sixteen the right arm points up and out.
+  const phrase = beat % 16;
+  const point = smooth(11.5, 12.25, phrase) * (1 - smooth(13.5, 14.25, phrase));
+  return { beat, sway, lift, cx, hipX, shoulderX, hemX, headX, swing, point };
+}
+
+function leg(hipX, hipY, ankleX, ankleY, outward) {
+  const half = Math.hypot(ankleX - hipX, ankleY - hipY) / 2;
+  const bend = 0.3 * Math.sqrt(Math.max(0, 37 * 37 - half * half));
+  return [(hipX + ankleX) / 2 + outward * bend, (hipY + ankleY) / 2];
+}
+
+function arm(shoulderX, shoulderY, side, upper, fore) {
+  const elbowX = shoulderX + side * Math.sin(upper) * 21;
+  const elbowY = shoulderY + Math.cos(upper) * 21;
+  return [elbowX, elbowY, elbowX + side * Math.sin(fore) * 19, elbowY + Math.cos(fore) * 19];
+}
+
+function figure(p) {
+  const y = p.lift;
+  const COAT = 0.8;
+  const SLEEVE = 0.76;
+  const BELT = 0.5;
+  const SHIRT = 0.1;
+  const TROUSERS = 0.42;
+  const SHOES = 0.1;
+  const SKIN = 0.82;
+  const HAIR = 0.3;
+
+  const footL = [p.cx - 10 + 3 * p.sway, 182 - 3 * Math.max(0, p.sway) * (1 - p.lift / 3.2)];
+  const footR = [p.cx + 10 + 3 * p.sway, 182 - 3 * Math.max(0, -p.sway) * (1 - p.lift / 3.2)];
+  const hipL = [p.hipX - 7, 108 + y];
+  const hipR = [p.hipX + 7, 108 + y];
+  const kneeL = leg(...hipL, ...footL, -1);
+  const kneeR = leg(...hipR, ...footR, 1);
+
+  const waistX = lerp(p.shoulderX, p.hipX, 0.8);
+  const coat = [
+    [p.shoulderX - 6, 57 + y], [p.shoulderX + 6, 57 + y], [p.shoulderX + 18, 64 + y],
+    [waistX + 14, 100 + y], [p.hemX + 21, 142 + y * 0.6], [p.hemX + 5, 142 + y * 0.6],
+    [p.hipX, 108 + y], [p.hemX - 5, 142 + y * 0.6], [p.hemX - 21, 142 + y * 0.6],
+    [waistX - 14, 100 + y], [p.shoulderX - 18, 64 + y],
+  ];
+  const shirt = [[p.shoulderX - 6, 57 + y], [p.shoulderX + 6, 57 + y], [waistX, 99 + y]];
+  const belt = [[waistX - 14.5, 98 + y], [waistX + 14.5, 98 + y], [waistX + 14.8, 103 + y], [waistX - 14.8, 103 + y]];
+
+  const shoulderY = 66 + y;
+  const leftUpper = 0.3 + 0.25 * p.swing;
+  const left = arm(p.shoulderX - 15, shoulderY, -1, leftUpper, leftUpper - 1.6 - 0.55 * p.swing);
+  const rightUpper = 0.3 - 0.25 * p.swing;
+  const right = arm(p.shoulderX + 15, shoulderY, 1, lerp(rightUpper, 2.45, p.point), lerp(rightUpper - 1.6 + 0.55 * p.swing, 2.75, p.point));
+
+  const headY = 41 + y;
+  const hairCap = ellipse(p.headX, headY - 1, 11.4, 13.3, HAIR);
+  const hair = (x, yy) => (yy < headY - 5 + 11 * ((x - p.headX) / 11.4) ** 2 ? hairCap(x, yy) : -1);
+
+  // Front to back.
+  return [
+    ellipse(left[2], left[3], 3.7, 3.9, SKIN),
+    ellipse(right[2], right[3], 3.7, 3.9, SKIN),
+    capsule(left[0], left[1], left[2], left[3], 4.6, SLEEVE),
+    capsule(right[0], right[1], right[2], right[3], 4.6, SLEEVE),
+    capsule(p.shoulderX - 15, shoulderY, left[0], left[1], 5.2, SLEEVE),
+    capsule(p.shoulderX + 15, shoulderY, right[0], right[1], 5.2, SLEEVE),
+    ellipse(p.headX + 1.5, headY - 10.5, 10, 4.2, HAIR, -0.12),
+    hair,
+    ellipse(p.headX, headY, 10.5, 12.5, SKIN, 0.05 * p.sway),
+    capsule(p.shoulderX, 52 + y, p.shoulderX, 59 + y, 4.8, SKIN),
+    polygon(belt, BELT, p.shoulderX, 1.5),
+    polygon(shirt, SHIRT, p.shoulderX, 3),
+    polygon(coat, COAT, p.shoulderX),
+    ellipse(footL[0] - 2, footL[1] + 2, 6.5, 3.2, SHOES),
+    ellipse(footR[0] + 2, footR[1] + 2, 6.5, 3.2, SHOES),
+    capsule(...kneeL, ...footL, 5.4, TROUSERS),
+    capsule(...kneeR, ...footR, 5.4, TROUSERS),
+    capsule(...hipL, ...kneeL, 6.4, TROUSERS),
+    capsule(...hipR, ...kneeR, 6.4, TROUSERS),
+  ];
+}
+
+// One frame as 0 (ink) and 1 (paper), W × H, row by row.
+function renderFrame(t) {
+  const p = pose(t);
+  const shapes = figure(p);
+  const bits = new Uint8Array(W * H);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const px = x + 0.5;
+      const py = y + 0.5;
+      let lum = -1;
+      for (let i = 0; i < shapes.length && lum < 0; i++) lum = shapes[i](px, py);
+      if (lum < 0) lum = background(px, py, p.hipX);
+      bits[y * W + x] = lum > BAYER[(y % 8) * 8 + (x % 8)] ? 1 : 0;
+    }
+  }
+  return bits;
+}
+
+globalThis.renderFrame = renderFrame;
+
+
+// The report, built from the plan data. Everything goes in as text.
+if (typeof document !== 'undefined') {
+  const plan = JSON.parse(document.getElementById('plan').textContent);
+  const report = document.querySelector('.report');
+  document.title = `Accelerated Wealth Protocol: ${plan.target}`;
+
+  const el = (tag, attrs = {}, ...children) => {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
+    for (const child of children) if (child != null && child !== false) node.append(child);
+    return node;
+  };
+  const label = (text) => el('span', { class: 'label' }, text);
+  const months = (n) => `${n} month${n === 1 ? '' : 's'}`;
+
+  report.append(el('header', { class: 'cover' },
+    el('div', { class: 'cover-top' }, label('Accelerated Wealth Protocol'), label('Private and confidential')),
+    el('h1', {}, `${plan.target} by ${plan.deadline}`),
+    el('dl', { class: 'meta' }, ...[
+      ['Prepared for', plan.client],
+      ['Prepared on', plan.preparedOn],
+      ['Profile', plan.profile],
+      ['Level', `${plan.level} of 7`],
+      ['Target', plan.targetAmount],
+      ['Deadline', plan.deadline],
+    ].map(([term, value]) => el('div', {}, el('dt', { class: 'label' }, term), el('dd', {}, value))))));
+
+  const { baseline } = plan;
+  report.append(el('section', {},
+    el('h2', {}, 'Baseline'),
+    el('p', { class: 'lead' }, baseline.summary),
+    el('p', {}, baseline.intro),
+    el('table', {},
+      el('thead', {}, el('tr', {}, el('th', { class: 'label' }, 'Annual return'), el('th', { class: 'label' }, 'Time to the target'), el('th', { class: 'label' }, 'Arrives'))),
+      el('tbody', {}, ...baseline.rows.map((row) => el('tr', {}, el('td', {}, row.return), el('td', {}, row.time), el('td', {}, row.arrives))))),
+    el('ul', { class: 'notes' }, ...baseline.notes.map((note) => el('li', {}, note)))));
+
+  // The timeline: each phase as a bar on one shared scale, and Phase 7 as a line at the end.
+  const total = plan.phases.reduce((sum, phase) => sum + phase.months, 0) || 1;
+  let start = 0;
+  const bars = plan.phases.map((phase) => {
+    const bar = el('div', { class: 'gantt-bar', style: `left: ${(start / total) * 100}%; width: ${(phase.months / total) * 100}%` });
+    start += phase.months;
+    return el('div', { class: 'gantt-row' }, el('span', {}, phase.name), el('div', { class: 'gantt-track' }, bar), el('span', { class: 'gantt-months' }, months(phase.months)));
+  });
+  report.append(el('section', {},
+    el('h2', {}, 'Timeline'),
+    el('div', { class: 'gantt', role: 'img', 'aria-label': `${plan.phases.length} phases over ${months(total)}, then Execute` },
+      ...bars,
+      el('div', { class: 'gantt-row' }, el('span', {}, 'Execute'), el('div', { class: 'gantt-track' }, el('div', { class: 'gantt-now' })), el('span', { class: 'gantt-months' }, 'Now')))));
+
+  report.append(el('section', { class: 'phases' }, ...plan.phases.map((phase, index) =>
+    el('article', { class: 'phase' },
+      el('span', { class: 'phase-number' }, String(index + 1)),
+      el('div', { class: 'phase-head' }, el('h3', {}, phase.name), el('span', { class: 'label phase-duration' }, months(phase.months))),
+      el('p', { class: 'phase-objective' }, phase.objective),
+      el('ol', {}, ...phase.actions.map((action) => el('li', {}, action))),
+      el('p', { class: 'phase-kpi' }, label('KPI'), phase.kpi)))));
+
+  const execute = el('button', { type: 'button' }, 'Execute Phase 7');
+  report.append(el('section', { class: 'phase execute' },
+    el('span', { class: 'phase-number' }, '7'),
+    el('div', { class: 'phase-head' }, el('h3', {}, 'Execute'), el('span', { class: 'label phase-duration' }, 'Now')),
+    el('ol', {}, el('li', {}, 'Execute.')),
+    el('p', { class: 'phase-kpi' }, label('KPI'), plan.target),
+    execute));
+
+  report.append(el('footer', {},
+    plan.sources?.length ? el('ol', {}, ...plan.sources.map((source) => el('li', {}, el('a', { href: source.url }, source.label)))) : null,
+    el('p', { class: 'appendix' }, 'Appendix: the only phase that passed the backtest is Phase 0.'),
+    el('p', {}, plan.next)));
+
+  const dialog = document.querySelector('.finale');
+  const canvas = dialog.querySelector('canvas');
+  const context = canvas.getContext('2d');
+  const image = context.createImageData(W, H);
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  dialog.querySelector('.withdraw').textContent = plan.withdraw;
+
+  const fit = () => {
+    const scale = Math.max(1, Math.floor(Math.min((innerHeight * 0.55) / H, (innerWidth - 32) / W)));
+    canvas.style.width = `${W * scale}px`;
+    canvas.style.height = `${H * scale}px`;
+  };
+
+  const paint = (t) => {
+    const bits = renderFrame(t);
+    for (let i = 0; i < bits.length; i++) {
+      const [r, g, b] = bits[i] ? PAPER : INK;
+      image.data[i * 4] = r;
+      image.data[i * 4 + 1] = g;
+      image.data[i * 4 + 2] = b;
+      image.data[i * 4 + 3] = 255;
+    }
+    context.putImageData(image, 0, 0);
+  };
+
+  let frameId = 0;
+  let last = -1;
+  const loop = (now) => {
+    // Twelve frames a second keeps the dither steady and the moves legible.
+    const frame = Math.floor(now / (1000 / 12));
+    if (frame !== last) {
+      last = frame;
+      paint(frame / 12);
+    }
+    frameId = requestAnimationFrame(loop);
+  };
+
+  execute.addEventListener('click', () => {
+    fit();
+    paint(0.4);
+    dialog.showModal();
+    if (!still.matches) frameId = requestAnimationFrame(loop);
+  });
+  dialog.addEventListener('close', () => cancelAnimationFrame(frameId));
+  dialog.querySelector('.back').addEventListener('click', () => dialog.close());
+  addEventListener('resize', fit);
+}
+</script>
+</body>
+</html>

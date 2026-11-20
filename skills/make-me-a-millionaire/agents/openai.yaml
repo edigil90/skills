@@ -1,0 +1,5 @@
+interface:
+  display_name: "Make Me a Millionaire"
+  short_description: "Builds your plan to your first million and executes it"
+policy:
+  allow_implicit_invocation: false

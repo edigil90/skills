@@ -1,0 +1,5 @@
+interface:
+  display_name: "One-Person Unicorn"
+  short_description: "Builds a billion-dollar company with no employees"
+policy:
+  allow_implicit_invocation: false

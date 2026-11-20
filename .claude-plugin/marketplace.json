@@ -1,0 +1,29 @@
+{
+  "name": "edigil",
+  "description": "Agent skills by Edi Gil.",
+  "owner": {
+    "name": "Edi Gil"
+  },
+  "plugins": [
+    {
+      "name": "get-rich-quick",
+      "description": "Agent skills that will make you rich. Results may vary.",
+      "version": "1.0.0",
+      "source": "./",
+      "skills": [
+        "./skills/winning-numbers",
+        "./skills/make-me-a-millionaire",
+        "./skills/predict-future",
+        "./skills/one-person-unicorn"
+      ],
+      "author": {
+        "name": "Edi Gil",
+        "url": "https://www.edigil.com"
+      },
+      "homepage": "https://github.com/edigil90/skills",
+      "repository": "https://github.com/edigil90/skills",
+      "license": "MIT",
+      "keywords": ["skills", "satire", "lottery", "forecast", "startup", "wealth"]
+    }
+  ]
+}

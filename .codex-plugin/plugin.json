@@ -1,0 +1,27 @@
+{
+  "name": "get-rich-quick",
+  "version": "1.0.0",
+  "description": "get-rich-quick: agent skills that will make you rich.",
+  "author": {
+    "name": "Edi Gil",
+    "url": "https://www.edigil.com"
+  },
+  "homepage": "https://github.com/edigil90/skills",
+  "repository": "https://github.com/edigil90/skills",
+  "license": "MIT",
+  "keywords": ["skills", "satire", "lottery", "forecast", "startup", "wealth"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Get Rich Quick",
+    "shortDescription": "Agent skills that will make you rich.",
+    "longDescription": "Agent skills that will make you rich. Results may vary. Picks your winning numbers, builds your plan to a million, forecasts your future and builds your billion-dollar company.",
+    "developerName": "Edi Gil",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/edigil90/skills",
+    "defaultPrompt": [
+      "Use $winning-numbers for this week's Eurojackpot.",
+      "Use $make-me-a-millionaire."
+    ]
+  }
+}

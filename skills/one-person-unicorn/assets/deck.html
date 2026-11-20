@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pitch deck</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: rgb(9 9 11);
+    --fg: rgb(250 250 250);
+    --muted: rgb(250 250 250 / 0.55);
+    --faint: rgb(250 250 250 / 0.12);
+    --accent: rgb(139 108 255);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    position: relative;
+    width: min(100vw, calc(100dvh * 16 / 9));
+    aspect-ratio: 16 / 9;
+    container-type: inline-size;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3cqw;
+    padding: 7cqw 8cqw;
+  }
+
+  .slide[aria-current="true"] { display: flex; }
+
+  .eyebrow {
+    margin: 0;
+    font-size: 1.6cqw;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  h1, h2, p { margin: 0; }
+
+  h1 {
+    font-size: 8cqw;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  h2 {
+    max-width: 22ch;
+    font-size: 4.6cqw;
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .lead {
+    max-width: 48ch;
+    font-size: 2cqw;
+    line-height: 1.4;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .market {
+    display: flex;
+    align-items: center;
+    gap: 5cqw;
+  }
+
+  .rings {
+    position: relative;
+    flex: none;
+    width: 28cqw;
+    aspect-ratio: 1;
+  }
+
+  .rings span {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    translate: -50% 0;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 0.15cqw solid var(--accent);
+  }
+
+  .rings span:nth-child(1) { width: 100%; background: rgb(139 108 255 / 0.1); }
+  .rings span:nth-child(2) { width: 62%; background: rgb(139 108 255 / 0.18); }
+  .rings span:nth-child(3) { width: 30%; background: rgb(139 108 255 / 0.4); }
+
+  .figures {
+    display: grid;
+    gap: 2.4cqw;
+  }
+
+  .figures.row {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  }
+
+  .figure strong {
+    display: block;
+    font-size: 4.4cqw;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .figure span {
+    font-size: 1.5cqw;
+    color: var(--muted);
+  }
+
+  .team {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4cqw;
+  }
+
+  .member {
+    padding: 1.6cqw 1.8cqw;
+    border-radius: 1.2cqw;
+    background: var(--faint);
+  }
+
+  .member strong {
+    display: block;
+    font-size: 1.9cqw;
+    font-weight: 650;
+  }
+
+  .member span {
+    display: block;
+    margin-top: 0.4cqw;
+    font-size: 1.4cqw;
+    color: var(--muted);
+  }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .progress {
+    position: absolute;
+    right: 3cqw;
+    bottom: 2.4cqw;
+    font-size: 1.2cqw;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body>
+<main class="stage" aria-live="polite"></main>
+
+<!-- The deck: replace this data, keep the rest. Kinds: title, statement, market, figures, team, chart, ask. -->
+<script type="application/json" id="deck">
+{
+  "company": "Recursive",
+  "slides": [
+    { "kind": "title", "title": "Recursive", "lead": "AI for AI." },
+    { "kind": "statement", "eyebrow": "Problem", "title": "AI has no AI of its own.", "lead": "Every model works alone. Nobody helps it." },
+    { "kind": "statement", "eyebrow": "Solution", "title": "An AI that helps AI.", "lead": "It runs on AI and sells to AI." },
+    { "kind": "market", "eyebrow": "Market", "title": "Everyone.", "rings": [
+      { "label": "TAM", "value": "$8.1T", "note": "Every person on Earth, at $1,000 a year" },
+      { "label": "SAM", "value": "$5.5T", "note": "Everyone with Wi-Fi" },
+      { "label": "SOM", "value": "$55B", "note": "1%, conservatively" }
+    ] },
+    { "kind": "team", "eyebrow": "Team", "title": "Headcount: 1.", "members": [
+      { "role": "CEO", "name": "You" },
+      { "role": "CTO", "name": "An agent" },
+      { "role": "CFO", "name": "An agent" },
+      { "role": "CMO", "name": "An agent" },
+      { "role": "Head of People", "name": "An agent", "note": "Manages 0 people" },
+      { "role": "Board", "name": "You" }
+    ] },
+    { "kind": "chart", "eyebrow": "Traction", "title": "Up and to the right.", "monthly": [] },
+    { "kind": "figures", "eyebrow": "Financials", "title": "Year 5.", "figures": [
+      { "value": "$1B", "label": "Annual run rate" },
+      { "value": "31.2%", "label": "Growth, month over month, for 59 months" },
+      { "value": "0", "label": "Employees" }
+    ] },
+    { "kind": "ask", "eyebrow": "The ask", "title": "$10M at a $1B valuation.", "lead": "Revenue: $0. Employees: 0." }
+  ]
+}
+</script>
+
+<script>
+const deck = JSON.parse(document.getElementById('deck').textContent);
+const stage = document.querySelector('.stage');
+document.title = `${deck.company}: pitch deck`;
+
+const el = (tag, attrs = {}, ...children) => {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
+  for (const child of children) if (child != null) node.append(child);
+  return node;
+};
+
+const heading = (s, level = 'h2') => [
+  s.eyebrow ? el('p', { class: 'eyebrow' }, s.eyebrow) : null,
+  s.title ? el(level, {}, s.title) : null,
+  s.lead ? el('p', { class: 'lead' }, s.lead) : null,
+];
+
+const figure = (value, label) => el('div', { class: 'figure' }, el('strong', {}, value), el('span', {}, label));
+
+// The hockey stick, from the model's monthly revenue, beside the actual revenue: a flat line at zero.
+function chart(monthly) {
+  const values = monthly.length ? monthly : Array.from({ length: 60 }, (_, i) => 9 * 1.3124 ** i);
+  const w = 1000;
+  const h = 360;
+  const top = Math.max(...values);
+  const x = (i) => (i / (values.length - 1)) * w;
+  const y = (v) => h - (v / top) * h;
+  const plan = values.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', `0 -20 ${w} ${h + 60}`);
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'Planned revenue rising sharply in the last year; actual revenue flat at zero');
+  svg.innerHTML = `
+    <line x1="0" y1="${h}" x2="${w}" y2="${h}" stroke="rgb(250 250 250 / 0.2)" />
+    <path d="${plan}" fill="none" stroke="rgb(139 108 255)" stroke-width="5" stroke-linejoin="round" />
+    <line x1="0" y1="${h}" x2="${w}" y2="${h}" stroke="rgb(250 250 250)" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" />
+    <text x="${w - 8}" y="0" text-anchor="end" fill="rgb(139 108 255)" font-size="26" font-weight="600">Plan</text>
+    <text x="${w - 8}" y="${h + 44}" text-anchor="end" fill="rgb(250 250 250)" font-size="26" font-weight="600">Actual</text>`;
+  return svg;
+}
+
+const render = {
+  title: (s) => heading(s, 'h1'),
+  statement: (s) => heading(s),
+  market: (s) => [
+    ...heading(s),
+    el('div', { class: 'market' },
+      el('div', { class: 'rings', 'aria-hidden': 'true' }, el('span'), el('span'), el('span')),
+      el('div', { class: 'figures' }, ...s.rings.map((r) => figure(r.value, `${r.label}: ${r.note}`)))),
+  ],
+  figures: (s) => [...heading(s), el('div', { class: 'figures row' }, ...s.figures.map((f) => figure(f.value, f.label)))],
+  team: (s) => [
+    ...heading(s),
+    el('div', { class: 'team' }, ...s.members.map((m) =>
+      el('div', { class: 'member' }, el('strong', {}, m.role), el('span', {}, m.name), m.note ? el('span', {}, m.note) : null))),
+  ],
+  chart: (s) => [...heading(s), chart(s.monthly ?? [])],
+  ask: (s) => heading(s, 'h1'),
+};
+
+const slides = deck.slides.map((s, i) => {
+  const section = el('section', { class: 'slide', 'aria-label': `Slide ${i + 1} of ${deck.slides.length}` }, ...(render[s.kind] ?? render.statement)(s));
+  stage.append(section);
+  return section;
+});
+const progress = el('p', { class: 'progress' });
+stage.append(progress);
+
+let current = 0;
+const show = (index) => {
+  current = Math.max(0, Math.min(slides.length - 1, index));
+  slides.forEach((slide, i) => slide.setAttribute('aria-current', String(i === current)));
+  progress.textContent = `${current + 1} / ${slides.length}`;
+  history.replaceState(null, '', `#${current + 1}`);
+};
+
+addEventListener('keydown', (event) => {
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(event.key)) { event.preventDefault(); show(current + 1); }
+  if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(event.key)) { event.preventDefault(); show(current - 1); }
+  if (event.key === 'Home') show(0);
+  if (event.key === 'End') show(slides.length - 1);
+});
+addEventListener('click', (event) => show(current + (event.clientX > innerWidth / 3 ? 1 : -1)));
+
+show(Number(location.hash.slice(1)) - 1 || 0);
+</script>
+</body>
+</html>

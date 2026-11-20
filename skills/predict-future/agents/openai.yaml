@@ -1,0 +1,5 @@
+interface:
+  display_name: "Predict Future"
+  short_description: "Forecasts your future with calibrated probabilities"
+policy:
+  allow_implicit_invocation: false

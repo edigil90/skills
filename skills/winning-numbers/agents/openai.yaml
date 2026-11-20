@@ -1,0 +1,5 @@
+interface:
+  display_name: "Winning Numbers"
+  short_description: "Picks the winning combination for your next draw"
+policy:
+  allow_implicit_invocation: false
